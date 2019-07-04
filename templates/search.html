@@ -5,9 +5,20 @@
 {% endblock %}
 
 {% block navbar %}
-    <div class="navbar-nav" id="main_nav_bar">
-        <a class="nav-item nav-link active" href="{{ url_for('search') }}">Search<span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="{{ url_for('logout') }}"> Logout </a>
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('search') }}">Search</a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
 
 {% block body %}
