@@ -1,5 +1,5 @@
 import os
-from flask import Flask, session, request, render_template
+from flask import Flask, session, request, render_template, redirect, url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -28,11 +28,11 @@ def login():
         return render_template("search.html", first_name=session["first_name"])
 
 
-@app.route("/login-attempt", methods=["POST", "GET"])
+@app.route("/login", methods=["POST", "GET"])
 def attempt_login():
 
     if request.method == "GET":
-        return render_template("login.html", login_message="Please Sign In")
+        return redirect(url_for('login'))
 
     # get information from form
     username = request.form.get("username")
@@ -50,11 +50,8 @@ def register():
     return render_template("register.html", registration_message="Please submit your information below.")
 
 
-@app.route("/registration-attempt", methods=["POST", "GET"])
+@app.route("/register", methods=["POST"])
 def attempt_registration():
-
-    if request.method == "GET":
-        return render_template("register.html", registration_message="Please submit your information below.")
 
     username = request.form.get("username")
     password = request.form.get("password")
@@ -62,10 +59,10 @@ def attempt_registration():
     last_name = request.form.get("last_name")
 
     if username_exists(username):
-        return render_template("register.html", registration_message="This username already exists. Try again.")
+        return render_template("register.html", registration_message="Sorry, this username already exists. Try again.")
     else:
-        add_new_user_to_db(username, password, first_name, last_name)
-        return render_template("login.html", login_message="Please Sign In")
+        add_new_user_to_db(first_name, last_name, username, password)
+        return render_template("login.html", login_message="Successful Registration! Please Sign In")
 
 
 @app.route("/search")
