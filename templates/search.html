@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block navbar %}
+    <div class="navbar-nav" id="main_nav_bar">
+        <a class="nav-item nav-link active" href="{{ url_for('search') }}">Search<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="{{ url_for('logout') }}"> Logout </a>
+{% endblock %}
+
+{% block body %}
+    <div id="Welcome">
+        <h3> Hello, {{ readers_name }}!  here!</h3>
+    </div>
+
+{% endblock %}
