@@ -40,7 +40,7 @@ def attempt_login():
 
     if login_successful(username, password):
         session["first_name"] = get_users_first_name(username, password)
-        return render_template("search.html", first_name=session["first_name"])
+        return redirect(url_for('search'))
     else:
         return render_template("login.html", login_message="Your username or password is incorrect. Try again.")
 
