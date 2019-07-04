@@ -1,0 +1,55 @@
+#Welcome {
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#Welcome h3 {
+    font-size: 50px;
+    font-family: "Helvetica", serif;
+    color: white;
+}
+
+h4 {
+    margin: 10px;
+    font-size: 20px;
+    font-family: "Helvetica", serif;
+}
+
+.btn {
+    background-color: green;
+    border: green;
+    color: white;
+}
+
+.btn:hover {
+    background-color: black;
+    color: white;
+}
+
+.center_box {
+    border-radius: 15px;
+    margin: auto;
+    width: 60%;
+}
+
+.center_box #logo {
+    width: 100%;
+    margin: auto;
+}
+
+#login_container {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.form-group {
+    margin: 15px;
+}
+
+body {
+    background-color: green;
+    padding-bottom: 120px;
+}
