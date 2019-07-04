@@ -1,0 +1,33 @@
+.pageheader {
+  font-family: sans-serif;
+  font-size: 30px;
+  text-align: center;
+  margin: 40px; }
+
+.pageheader {
+  font-style: bold; }
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding-top: 10px;
+  background: #F5F5F5; }
+  .footer div {
+    font-size: 15px; }
+  .footer a {
+    color: #70726F;
+    font-size: 20px;
+    padding: 5px; }
+  .footer a:hover {
+    color: black; }
+  .footer .footer-copyright {
+    color: grey;
+    font-size: 12px; }
+
+.form-group a {
+  color: grey;
+  font-size: 15px; }
+
+/*# sourceMappingURL=input.css.map */

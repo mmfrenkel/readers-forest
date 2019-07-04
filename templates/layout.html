@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/input.css') }}"/>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                {% block navbar %}
+                {% endblock %}
+            </div>
+        </nav>
+        <div class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
+        <footer class="footer">
+            <div class="container text-center">
+                <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                <a href="https://github.com/mmfrenkel"><i class="fa fa-github"></i></a>
+            </div>
+            <div class="footer-copyright text-center py-3 small_font"> &copy; 2019 Copyright: Reader's Forest</a></div>
+        </footer>
+    </body>
+</html>
