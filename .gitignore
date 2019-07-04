@@ -4,3 +4,4 @@ venv/*
 flask_session/*
 .DS_Store
 static/stylesheets/.sass-cache/*
+.idea/*

@@ -5,15 +5,10 @@
 }
 
 #Welcome h3 {
-    font-size: 50px;
+    font-size: 40px;
     font-family: "Helvetica", serif;
     color: white;
-}
-
-h4 {
-    margin: 10px;
-    font-size: 20px;
-    font-family: "Helvetica", serif;
+    margin-bottom: 40px;
 }
 
 .btn {
@@ -30,7 +25,7 @@ h4 {
 .center_box {
     border-radius: 15px;
     margin: auto;
-    width: 60%;
+    width: 70%;
 }
 
 .center_box #logo {

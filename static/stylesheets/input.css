@@ -4,8 +4,21 @@
   text-align: center;
   margin: 40px; }
 
+h4, h5 {
+  margin: 10px;
+  font-family: "Helvetica", serif; }
+
 .pageheader {
   font-style: bold; }
+
+h4 {
+  font-size: 22px; }
+
+h5 {
+  font-size: 17px; }
+
+.navbar-nav a {
+  font-size: 18px; }
 
 .footer {
   position: fixed;
@@ -24,7 +37,7 @@
     color: black; }
   .footer .footer-copyright {
     color: grey;
-    font-size: 12px; }
+    font-size: 14px; }
 
 .form-group a {
   color: grey;

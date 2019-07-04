@@ -5,6 +5,11 @@
     margin: 40px;
 }
 
+%fonts {
+    margin: 10px;
+    font-family: "Helvetica", serif;
+}
+
 %pageimages {
     display: block;
     margin-left: auto;
@@ -16,6 +21,22 @@
 .pageheader {
     @extend %headers;
     font-style: bold;
+}
+
+h4 {
+    @extend %fonts;
+    font-size: 22px;
+}
+
+h5 {
+    @extend %fonts;
+    font-size: 17px;
+}
+
+.navbar-nav {
+    a {
+        font-size: 18px;
+    }
 }
 
 .footer {
@@ -42,7 +63,7 @@
 
     .footer-copyright {
         color: grey;
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 

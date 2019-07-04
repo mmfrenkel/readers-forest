@@ -19,14 +19,29 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
+
 @app.route("/")
-def index():
-    return render_template("index.html")
-
-@app.route("/login", methods=["GET, POST"])
 def login():
-    return render_template("login.html")
 
-@app.route("/register", methods=["GET"])
+    if session.get("first_name") is None:
+        return render_template("login.html")
+    else:
+        return render_template("search.html")
+
+
+@app.route("/register", methods=["POST", "GET"])
 def register():
     return render_template("register.html")
+
+
+@app.route("/search")
+def search():
+    return render_template("search.html", user=session["first_name"])
+
+
+@app.route("/books/<isbn>")
+def book(isbn):
+    return render_template("book.html", books=books)
+
+
+def check_username_password_exist():
