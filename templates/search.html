@@ -14,6 +14,9 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="login.html">Hello {{ user }}! </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a>
             </li>
@@ -23,7 +26,36 @@
 
 {% block body %}
     <div id="Welcome">
-        <h3> Hello, {{ readers_name }}!  here!</h3>
+        <h3> Search for books here!</h3>
     </div>
+    <div class="center_box" id="search_container">
+        <h4> Enter a title, author, or ISBN number </h4>
+        <hr>
+        <form action="{{ url_for('search_db') }}" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" placeholder="Enter Something Here" name="user_search">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Search!</button>
+                </div> <!-- form-group// -->
+            </div> <!-- form-group// -->
+        </form>
+    </div>
+
+    <div class="container" id="results_container">
+        {% for book in book_result %}
+            <div class="card">
+                <div class="card-body query_item">
+                    <h4 class="book_title"> {{ book.title }} ({{ book.year }}) </h4>
+                    <h3 class="author"> {{ book.author }} </h4>
+                     <div class="form-group">
+                        <button class="btn btn-primary">See More!</button>
+                    </div> <!-- form-group// -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 
 {% endblock %}

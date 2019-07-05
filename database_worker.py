@@ -2,6 +2,7 @@ import os
 import csv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from book_object import BookObject
 
 
 class DatabaseWorker:
@@ -162,6 +163,20 @@ class DatabaseWorker:
         except Exception as e:
             print(f"Could not add new user to the database due to: {e}")
 
+    def find_like_items(self, item):
+
+        query_item = '%' + str(item) + '%'
+        query = "SELECT * FROM books WHERE ((isbn LIKE :isbn) OR (title LIKE :title) OR (author LIKE :author));"
+        book_tuples = self.session.execute(query, {"isbn": query_item, "title": query_item, "author": query_item}).fetchall()
+
+        list_books = list()
+        for book in book_tuples:
+            book_object = BookObject(db_id=book[0], isbn=book[1], title=book[2], author=book[3], year=book[4])
+            list_books.append(book_object)
+
+        return list_books
+
     def close_session(self):
         self.session.close()
+
 

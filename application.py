@@ -65,14 +65,24 @@ def attempt_registration():
         return render_template("login.html", login_message="Successful Registration! Please Sign In")
 
 
-@app.route("/search")
+@app.route("/search", methods=["GET"])
 def search():
-    return render_template("search.html", user=session["first_name"])
+    return render_template("search.html", user=session["first_name"], book_result=[])
 
 
-@app.route("/books/<isbn>")
+@app.route("/search", methods=["POST"])
+def search_db():
+
+    user_search = request.form.get("user_search")
+    list_books = db.find_like_items(user_search)
+    return render_template("search.html", user=session["first_name"], book_result=list_books)
+
+
+@app.route("/books/<isbn>", methods=["GET"])
 def book(isbn):
     return render_template("book.html")
+
+
 
 
 

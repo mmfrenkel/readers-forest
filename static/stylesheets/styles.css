@@ -11,6 +11,18 @@
     margin-bottom: 40px;
 }
 
+.query_item h4 {
+    font-family: "Helvetica", serif;
+    color: black;
+    font-size: 20px;
+}
+
+.query_item h3 {
+    font-family: "Helvetica", serif;
+    color: black;
+    font-size: 15px;
+}
+
 .btn {
     background-color: green;
     border: green;
@@ -33,11 +45,37 @@
     margin: auto;
 }
 
+.query_item {
+
+}
+
 #login_container {
     background-color: white;
     padding: 10px;
     text-align: center;
     font-size: 15px;
+}
+
+#search_container {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+#results_container {
+    padding-top: 40px;
+    margin: auto;
+    width: 500px;
+    text-align: center;
+}
+
+#results_container .query_item {
+    background-color: lightgreen;
+}
+
+#results_container .card {
+    margin: 20px;
 }
 
 .form-group {
