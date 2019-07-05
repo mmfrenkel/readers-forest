@@ -28,11 +28,6 @@
     <div id="Welcome">
         <h3> Search for books here!</h3>
     </div>
-
-    <div class="center_box" id="book_logo_container">
-        <img src="/static/img/book_icon.png">
-    </div>
-
     <div class="center_box" id="search_container">
         <h4> Enter a title, author, or ISBN number </h4>
         <hr>
@@ -53,7 +48,7 @@
             <div class="card">
                 <div class="card-body query_item">
                     <h4 class="book_title"> {{ book.title }} ({{ book.year }}) </h4>
-                    <h3 class="author"> {{ book.author }} </h3>
+                    <h3 class="author"> {{ book.author }} </h4>
                      <div class="form-group">
                         <button class="btn btn-primary">See More!</button>
                     </div> <!-- form-group// -->

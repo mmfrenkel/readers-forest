@@ -45,16 +45,8 @@
     margin: auto;
 }
 
-#book_logo_container {
-    background-color: green;
-    margin: auto;
-    text-align: center;
-    margin-bottom: 30px;
-}
+.query_item {
 
-.center_box img {
-    background-color: green;
-    max-width: 200px;
 }
 
 #login_container {
