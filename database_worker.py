@@ -12,6 +12,8 @@ class DatabaseWorker:
         self.engine = None
 
     def initialize_database(self):
+        """Main method to set up new database tables from scratch and inserts book information from file."""
+
         try:
             self.initiate_session()
             self.create_all_tables()
@@ -21,6 +23,8 @@ class DatabaseWorker:
             print(f"Failed to properly initialized database due to {e}")
 
     def initiate_session(self):
+        """Creates the SQLAlchemy Session"""
+
         print("Initiating SQLAlchemy Session")
 
         # Check for environment variable
@@ -34,7 +38,7 @@ class DatabaseWorker:
             print(f"Failed to create session, See more: {te}")
 
     def create_all_tables(self):
-        """Creates all database tables at once"""
+        """Creates all database tables at once."""
 
         self.create_user_table()
         self.create_books_table()
@@ -42,8 +46,11 @@ class DatabaseWorker:
         self.create_user_saved_books()
 
     def insert_books_from_file(self, book_file="books.csv"):
-        """Imports a csv file containing book data (comma-delimited) and inserts each line into the
-        books database."""
+        """
+        Imports a csv file containing book data (comma-delimited) and inserts each line into the
+        books database. Assumes that a file called "books.csv" exists in the same directory level,
+        but another path can be passed.
+        """
 
         print("Inserting books into 'books' table from .csv file")
         try:
@@ -60,6 +67,7 @@ class DatabaseWorker:
         self.session.commit()
 
     def create_user_table(self):
+        """Creates 'users' table from scratch, if doesn't exist yet."""
 
         if self.engine.dialect.has_table(self.engine, 'users'):
             print("Note 'users' table already exists")
@@ -78,6 +86,7 @@ class DatabaseWorker:
         self.session.commit()
 
     def create_books_table(self):
+        """Creates 'books' table from scratch, if doesn't exist yet."""
 
         if self.engine.dialect.has_table(self.engine, 'books'):
             print("Note 'books' table already exists")
@@ -96,6 +105,7 @@ class DatabaseWorker:
         self.session.commit()
 
     def create_reviews_table(self):
+        """Creates 'book_reviews' table from scratch, if doesn't exist yet."""
 
         if self.engine.dialect.has_table(self.engine, 'book_reviews'):
             print("Note 'book_reviews' table already exists")
@@ -137,8 +147,13 @@ class DatabaseWorker:
         return True
 
     def login_successful(self, username, password):
-        """Returns true if the username, password combination provided is in the db for
-        1 and only 1 distinct entry"""
+        """
+        Returns true if the username, password combination provided is in the db for
+        1 and only 1 distinct entry.
+        :param username
+        :param password
+        :return: boolean for 'was successful login'
+        """
 
         if self.session.execute("SELECT username FROM users WHERE username = :username AND password = :password",
                       {"username": username, "password": password}).rowcount == 1:
@@ -152,6 +167,14 @@ class DatabaseWorker:
                                     {"username": username, "password": password}).fetchone()['first_name']
 
     def add_new_user_to_db(self, first_name, last_name, username, password):
+        """
+        Adds a new Reader's Forest user to the database (user table)
+        :param first_name: first name of new user
+        :param last_name: last name of new user
+        :param username: submitted username
+        :param password: submitted password
+        :return: None
+        """
 
         try:
             self.session.execute(
@@ -163,7 +186,13 @@ class DatabaseWorker:
         except Exception as e:
             print(f"Could not add new user to the database due to: {e}")
 
-    def find_like_items(self, item):
+    def search_book_database(self, item):
+        """
+        Searches the book database to locate any 'matching' items based on LIKE queries for title, isbn and author
+        and returns a list of book objects. Note that date is unsupported
+        :param item: any item submitted by user
+        :return: list of book tuple Objects that match the search item
+        """
 
         query_item = '%' + str(item) + '%'
         query = "SELECT * FROM books WHERE ((isbn LIKE :isbn) OR (title LIKE :title) OR (author LIKE :author));"

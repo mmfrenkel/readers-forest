@@ -52,7 +52,7 @@
     margin-bottom: 30px;
 }
 
-.center_box img {
+#book_logo_container img {
     background-color: green;
     max-width: 200px;
 }
@@ -69,6 +69,7 @@
     padding: 10px;
     text-align: center;
     font-size: 15px;
+
 }
 
 #results_container {
