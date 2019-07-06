@@ -11,6 +11,10 @@
     margin-bottom: 40px;
 }
 
+.checked {
+    color: yellow;
+}
+
 .query_item h4 {
     font-family: "Helvetica", serif;
     color: black;
@@ -23,10 +27,76 @@
     font-size: 15px;
 }
 
+.outer_container {
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#book_outer_container {
+    background-color: white;
+}
+
+#review_outer_container {
+    background-color: #8DC48D;
+}
+
+#book_container {
+    background-color: #8DC48D;
+    padding: 20px;
+    margin: auto;
+}
+
+#dotted_line {
+    size: 60px;
+    color: white;
+    text-align: center;
+}
+
+#submit_review_container {
+    background-color: #8DC48D;
+}
+
+#star_rating {
+    margin-left: 40%;
+}
+
+.outer_container #review_box {
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.outer_container h4 {
+    font-size: 28px;
+    font-family: "Helvetica", serif;
+    color: white;
+    text-align: center;
+}
+
+.outer_container h5 {
+    font-family: "Helvetica", serif;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+#submit_review_container h6 {
+    font-family: "Helvetica", serif;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+}
+
 .btn {
     background-color: green;
     border: green;
     color: white;
+    margin: auto;
 }
 
 .btn:hover {
@@ -40,9 +110,20 @@
     width: 60%;
 }
 
-.center_box #logo {
+.center_box .logo {
     width: 100%;
     margin: auto;
+}
+
+.star_container .fa-star {
+    text-align: center;
+}
+
+#login_container {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
 }
 
 #book_logo_container {
@@ -57,19 +138,11 @@
     max-width: 200px;
 }
 
-#login_container {
-    background-color: white;
-    padding: 10px;
-    text-align: center;
-    font-size: 15px;
-}
-
 #search_container {
     background-color: white;
     padding: 10px;
     text-align: center;
     font-size: 15px;
-
 }
 
 #results_container {

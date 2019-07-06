@@ -40,7 +40,8 @@ def attempt_login():
     password = request.form.get("password")
 
     if db.login_successful(username, password):
-        session["first_name"] = db.get_users_first_name(username, password)
+        session["first_name"] = db.get_users_name_by_login(username, password)
+        session["user_id"] = db.get_user_id_by_login(username, password)
         return redirect(url_for('search'))
     else:
         return render_template("login.html", login_message="Your username or password is incorrect. Try again.")
@@ -79,6 +80,10 @@ def attempt_registration():
 @app.route("/search", methods=["GET"])
 def search():
     """Default search page, accessible by user on login."""
+
+    if session.get("first_name") is None:
+        return redirect(url_for('login'))
+
     return render_template("search.html", user=session["first_name"], book_result=[])
 
 
@@ -87,16 +92,35 @@ def search_db():
     """Searches database for users request field, returning any match on isbn, author or title."""
 
     user_search = request.form.get("user_search")
-    list_books = db.search_book_database(user_search)
+    list_books = db.search_book_database_by_any(user_search)
+
     return render_template("search.html", user=session["first_name"], book_result=list_books)
 
 
-@app.route("/books/<isbn>", methods=["GET"])
+@app.route("/books", methods=["POST"])
+def find_book():
+    ibsn = None
+
+    print(request.form.get("book_isbn"))
+    return redirect(url_for('search'))
+
+
+@app.route("/book-review", methods=["POST"])
+def review_book():
+    isbn=None
+    return redirect(url_for('book'), isbn=ibsn)
+
+
+@app.route("/book/<string:isbn>", methods=["GET"])
 def book(isbn):
-    return render_template("book.html")
 
+    if session.get("first_name") is None:
+        return redirect(url_for('login'))
 
+    book_object = db.search_book_database_by_isbn(isbn)
+    book_reviews = db.get_book_reviews(book_object.db_id)
+    review_submitted = db.user_already_submitted_review(book_object.db_id, session['user_id'])
 
-
-
+    return render_template("book.html", user=session["first_name"], book=book_object, book_reviews=book_reviews,
+                           review_submitted=review_submitted)
 

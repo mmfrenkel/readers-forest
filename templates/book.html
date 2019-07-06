@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block navbar %}
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('search') }}">Search</a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('search') }}">Hello, {{ user }}! </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container outer_container" id="book_outer_container">
+        <div class="container" id="book_container">
+            <h4 id="book_name"> {{ book.title }} ({{ book.year }}) </h4>
+            <hr>
+            <h5 id="book_author"> Author: {{ book.author }} </h5>
+            <h5 id="book_author"> ISBN: {{ book.isbn }} </h5>
+        </div>
+    </div>
+
+    <h3 id="dotted_line"> . . . </h3>
+
+    <div class="container outer_container" id="review_outer_container">
+        {% if book_reviews %}
+            {% for review in book_reviews %}
+                <div class="container" id="review_container">
+                    <h4 id="book_name"> {{ review.username }} submitted on ({{ review.date }}) </h4>
+                    {% for number in range(review.rating) %}
+                        <span class="fa fa-star checked"></span>
+                    {% endfor %}
+                    <p">{{ review.review }}</p>
+                </div>
+                <br> </br>
+            {% endfor %}
+        {% else %}
+            <div class="container" id="review_container">
+                <h5 id="no_reviews"> No reviews yet </h5>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if review_submitted %}
+        <div class="container outer_container" id="submit_review_container">
+            <h5> You submitted a review for this book already. </h5>
+        </div>
+    {% else %}
+        <div class="container outer_container" id="submit_review_container">
+            <h5> Did you read this book? Submit your own review! </h5>
+            <hr>
+            <h6> How many stars would you give this book? </h6>
+            <form action="{{ url_for('review_book') }}" method="post">
+                <div class="form-group" id="star_rating">
+                    <div>
+                        <input type="radio" id="one_star" name="user_rating" value="one">
+                        <label for="one_star">
+                            <span class="fa fa-star checked"></span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="two_star" name="user_rating" value="two">
+                        <label for="two_star">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="three_star" name="user_rating" value="three">
+                        <label for="three_star">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="four_star" name="user_rating" value="four">
+                        <label for="four_star">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="five_star" name="user_rating" value="five">
+                        <label for="five_star">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <h6> How would you describe this book to a friend? </h6>
+                <div class="form-group">
+                    <div class="input-group">
+                        <textarea id="review_box" name="review_text" form="usrform" placeholder="Start Your Review"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock %}

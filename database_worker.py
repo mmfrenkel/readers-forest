@@ -2,7 +2,7 @@ import os
 import csv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from book_object import BookObject
+from objects import BookObject
 
 
 class DatabaseWorker:
@@ -115,7 +115,9 @@ class DatabaseWorker:
         self.session.execute(
             """CREATE TABLE book_reviews ( 
                 id SERIAL PRIMARY KEY,
+                book_id INT REFERENCES books,
                 user_id INT REFERENCES users,
+                date_created DATE,
                 rating FLOAT,
                 review VARCHAR
             );"""
@@ -160,11 +162,22 @@ class DatabaseWorker:
             return True
         return False
 
-    def get_users_first_name(self, username, password):
-        """Obtains the user's name as a string """
+    def get_users_name_by_login(self, username, password):
+        """Obtains the user's name as a string based on their login credentials"""
 
         return self.session.execute("SELECT first_name FROM users WHERE username = :username AND password = :password",
                                     {"username": username, "password": password}).fetchone()['first_name']
+
+    def get_user_id_by_login(self, username, password):
+        """Obtains the user's name as a string based on their login credentials"""
+
+        return self.session.execute("SELECT id FROM users WHERE username = :username AND password = :password",
+                                    {"username": username, "password": password}).fetchone()['id']
+
+    def get_username_by_id(self, user_db_id):
+        """Obtains the user's name as a string based on their database id."""
+
+        return self.session.execute("SELECT id FROM users WHERE id = :db_id", {"db_id": user_db_id}).fetchone()['username']
 
     def add_new_user_to_db(self, first_name, last_name, username, password):
         """
@@ -186,7 +199,7 @@ class DatabaseWorker:
         except Exception as e:
             print(f"Could not add new user to the database due to: {e}")
 
-    def search_book_database(self, item):
+    def search_book_database_by_any(self, item):
         """
         Searches the book database to locate any 'matching' items based on LIKE queries for title, isbn and author
         and returns a list of book objects. Note that date is unsupported
@@ -200,12 +213,84 @@ class DatabaseWorker:
 
         list_books = list()
         for book in book_tuples:
-            book_object = BookObject(db_id=book[0], isbn=book[1], title=book[2], author=book[3], year=book[4])
+            book_object = BookObject(
+                db_id=book[0],
+                isbn=book[1],
+                title=book[2],
+                author=book[3],
+                year=book[4],
+                star_rating=3
+            )
             list_books.append(book_object)
 
         return list_books
 
+    def search_book_database_by_isbn(self, isbn):
+        """
+        Searches the book database to locate books based on their isbn identification number.
+        Note that this assumes that every isbn number is distinct
+        :param isbn: any item submitted by user
+        :return: list of book tuple Objects that match the search item
+        """
+
+        query = "SELECT * FROM books WHERE isbn = :isbn;"
+        book_tuples = self.session.execute(query, {"isbn": isbn}).fetchall()
+
+        if not book_tuples:
+            return None
+
+        # assume one result (1 element in list of tuples)
+        book_tuple = book_tuples[0]
+        book = BookObject(
+            db_id=book_tuple[0],
+            isbn=book_tuple[1],
+            title=book_tuple[2],
+            author=book_tuple[3],
+            year=book_tuple[4],
+            star_rating=3
+        )
+        return book
+
+    def get_book_reviews(self, book_db_id):
+        """
+        Retrieves all book reviews based on the books database id.
+        :param db_book_id:  unique identifier (id) for the book in the database (id from 'books' table)
+        :return: list of Review objects
+        """
+
+        query = "SELECT * FROM book_reviews WHERE book_id = :book_id;"
+        review_tuples = self.session.execute(query, {"book_id": book_db_id}).fetchall()
+
+        if not review_tuples:
+            return None
+
+        list_reviews = list()
+        for review in review_tuples:
+            review_object = BookObject(
+                db_id=review[0],
+                book_id=review[1],
+                username=self.get_username_by_id(review[2]),
+                date_created=review[3],
+                rating=review[4],
+                review=review[5]
+            )
+            list_reviews.append(review_object)
+
+        return list_reviews
+
+    def user_already_submitted_review(self, book_db_id, user_db_id):
+        """
+        Returns True if a user has already submitted an id for a book.
+        :param book_db_id
+        :param user_db_id
+        :return: boolean representing if review has already been submitted
+        """
+        query = "SELECT * FROM book_reviews WHERE book_id = :book_id AND user_id = :user_id;"
+        if self.session.execute(query, {"book_id": book_db_id, "user_id":user_db_id}).fetchall():
+            return True
+        else:
+            return False
+
     def close_session(self):
         self.session.close()
-
 

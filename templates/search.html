@@ -15,7 +15,7 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="login.html">Hello {{ user }}! </a>
+                <a class="nav-link" href="{{ url_for('search') }}">Hello, {{ user }}! </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('logout') }}"> Logout </a>
@@ -53,14 +53,25 @@
             <div class="card">
                 <div class="card-body query_item">
                     <h4 class="book_title"> {{ book.title }} ({{ book.year }}) </h4>
-                    <h3 class="author"> {{ book.author }} </h3>
-                     <div class="form-group">
-                        <button class="btn btn-primary">See More!</button>
-                    </div> <!-- form-group// -->
+                    <h3 class="book_author"> {{ book.author }} </h4>
+                    <div class="container star_container">
+                        {% for number in range(book.star_rating) %}
+                            <span class="fa fa-star checked"></span>
+                        {% endfor %}
+                    </div>
+                    <form action="{{ url_for('find_book') }}" method="post">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="hidden" value={{ book.isbn }} name="book_isbn">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" value="See More" name="submit_button">
+                        </div>
+                    </form>
                 </div>
             </div>
         {% endfor %}
     </div>
-
 
 {% endblock %}
