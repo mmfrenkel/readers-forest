@@ -1,30 +1,16 @@
-#Welcome {
-    text-align: center;
-    margin: auto;
-    margin-top: 50px;
+body {
+    background-color: green;
+    padding-bottom: 120px;
 }
 
-#Welcome h3 {
-    font-size: 40px;
-    font-family: "Helvetica", serif;
-    color: white;
-    margin-bottom: 40px;
+.form-group {
+    margin: 15px;
 }
 
 .checked {
-    color: yellow;
-}
-
-.query_item h4 {
-    font-family: "Helvetica", serif;
-    color: black;
-    font-size: 20px;
-}
-
-.query_item h3 {
-    font-family: "Helvetica", serif;
-    color: black;
-    font-size: 15px;
+    color: orange;
+    text-align: center;
+    margin: auto;
 }
 
 .outer_container {
@@ -33,34 +19,8 @@
     padding: 10px;
     margin-top: 30px;
     margin-bottom: 20px;
-}
-
-#book_outer_container {
-    background-color: white;
-}
-
-#review_outer_container {
-    background-color: #8DC48D;
-}
-
-#book_container {
-    background-color: #8DC48D;
-    padding: 20px;
-    margin: auto;
-}
-
-#dotted_line {
-    size: 60px;
-    color: white;
-    text-align: center;
-}
-
-#submit_review_container {
-    background-color: #8DC48D;
-}
-
-#star_rating {
-    margin-left: 40%;
+    border-radius: 10px;
+    max-width: 700px;
 }
 
 .outer_container #review_box {
@@ -71,25 +31,17 @@
     margin-right: 10px;
 }
 
-.outer_container h4 {
-    font-size: 28px;
-    font-family: "Helvetica", serif;
+.outer_container h3, h4, h5 {
+    text-align: center;
+}
+
+#already_submitted, #three_dots {
     color: white;
     text-align: center;
 }
 
-.outer_container h5 {
-    font-family: "Helvetica", serif;
-    color: white;
-    font-size: 20px;
-    text-align: center;
-}
-
-#submit_review_container h6 {
-    font-family: "Helvetica", serif;
-    color: white;
-    font-size: 18px;
-    text-align: center;
+#three_dots {
+    font-size: 10px;
 }
 
 .btn {
@@ -107,7 +59,7 @@
 .center_box {
     border-radius: 15px;
     margin: auto;
-    width: 60%;
+    width: 65%;
 }
 
 .center_box .logo {
@@ -148,7 +100,7 @@
 #results_container {
     padding-top: 40px;
     margin: auto;
-    width: 500px;
+    width: 450px;
     text-align: center;
 }
 
@@ -160,11 +112,40 @@
     margin: 20px;
 }
 
-.form-group {
-    margin: 15px;
+#book_outer_container {
+    background-color: lightgreen;
 }
 
-body {
-    background-color: green;
-    padding-bottom: 120px;
+#review_outer_container {
+    width: 90%;
+    margin: auto;
+    background-color: white;
+}
+
+#book_container {
+    background-color: white;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+#submit_review_container {
+    background-color: white;
+}
+
+#star_rating {
+    margin-left: 40%;
+}
+
+
+#Welcome {
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#Welcome h3 {
+    font-size: 40px;
+    color: white;
+    margin-bottom: 40px;
 }

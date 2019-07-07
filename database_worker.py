@@ -2,8 +2,8 @@ import os
 import csv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from objects import BookObject
-
+from objects import BookObject, ReviewObject
+from datetime import datetime
 
 class DatabaseWorker:
 
@@ -176,8 +176,13 @@ class DatabaseWorker:
 
     def get_username_by_id(self, user_db_id):
         """Obtains the user's name as a string based on their database id."""
+        return self.session.execute("SELECT username FROM users WHERE id = :db_id",
+                                    {"db_id": user_db_id}).fetchone()['username']
 
-        return self.session.execute("SELECT id FROM users WHERE id = :db_id", {"db_id": user_db_id}).fetchone()['username']
+    def get_book_db_id_by_isbn(self, isbn):
+        """Obtains the book's database id by search on isbn number."""
+
+        return self.session.execute("SELECT id FROM books WHERE isbn = :ibsn", {"ibsn": isbn}).fetchone()['id']
 
     def add_new_user_to_db(self, first_name, last_name, username, password):
         """
@@ -240,6 +245,7 @@ class DatabaseWorker:
             return None
 
         # assume one result (1 element in list of tuples)
+
         book_tuple = book_tuples[0]
         book = BookObject(
             db_id=book_tuple[0],
@@ -266,17 +272,39 @@ class DatabaseWorker:
 
         list_reviews = list()
         for review in review_tuples:
-            review_object = BookObject(
+            review_object = ReviewObject(
                 db_id=review[0],
                 book_id=review[1],
                 username=self.get_username_by_id(review[2]),
                 date_created=review[3],
-                rating=review[4],
+                rating=int(review[4]),
                 review=review[5]
             )
             list_reviews.append(review_object)
 
         return list_reviews
+
+    def add_user_review_to_db(self, user_db_id, book_db_id, rating, review):
+        """
+        Adds new user review to the database.
+        :param user_db_id: database user id
+        :param book_db_id: database book id
+        :param rating: user provided rating
+        :param review: user provided review
+        """
+
+        insert_statement = "INSERT INTO book_reviews (book_id, user_id, date_created, rating, review) " \
+                           "VALUES (:book_id, :user_id, :date_created, :rating, :review)"
+        self.session.execute(
+            insert_statement, {
+                "book_id": book_db_id,
+                "user_id": user_db_id,
+                "date_created": datetime.now(),
+                "rating": rating,
+                "review": int(review)
+            }
+        )
+        self.session.commit()
 
     def user_already_submitted_review(self, book_db_id, user_db_id):
         """

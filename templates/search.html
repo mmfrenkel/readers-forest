@@ -52,8 +52,10 @@
         {% for book in book_result %}
             <div class="card">
                 <div class="card-body query_item">
-                    <h4 class="book_title"> {{ book.title }} ({{ book.year }}) </h4>
-                    <h3 class="book_author"> {{ book.author }} </h4>
+                    <h4 class="book_title">
+                        <span class="fa fa-book"></span> {{ book.title }} ({{ book.year }})
+                    </h4>
+                    <h5 class="book_author"> {{ book.author }} </h5>
                     <div class="container star_container">
                         {% for number in range(book.star_rating) %}
                             <span class="fa fa-star checked"></span>

@@ -97,18 +97,23 @@ def search_db():
     return render_template("search.html", user=session["first_name"], book_result=list_books)
 
 
-@app.route("/books", methods=["POST"])
+@app.route("/book-search/", methods=["POST"])
 def find_book():
-    ibsn = None
-
-    print(request.form.get("book_isbn"))
-    return redirect(url_for('search'))
+    isbn = request.form.get("book_isbn")
+    return redirect(url_for('book', isbn=isbn))
 
 
 @app.route("/book-review", methods=["POST"])
 def review_book():
-    isbn=None
-    return redirect(url_for('book'), isbn=ibsn)
+
+    isbn = request.form.get("book_isbn")
+    rating = request.form.get("user_rating")
+    review = request.form.get("user_review")
+
+    book_db_id = db.get_book_db_id_by_isbn(isbn)
+    db.add_user_review_to_db(user_db_id=session["user_id"], book_db_id=book_db_id, rating=rating, review=review)
+
+    return redirect(url_for('book', isbn=isbn))
 
 
 @app.route("/book/<string:isbn>", methods=["GET"])

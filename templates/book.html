@@ -27,37 +27,54 @@
 {% block body %}
     <div class="container outer_container" id="book_outer_container">
         <div class="container" id="book_container">
-            <h4 id="book_name"> {{ book.title }} ({{ book.year }}) </h4>
+            <h3 class="book_title">
+                <span class="fa fa-book"></span>
+                {{ book.title }} ({{ book.year }})
+            </h3>
             <hr>
-            <h5 id="book_author"> Author: {{ book.author }} </h5>
-            <h5 id="book_author"> ISBN: {{ book.isbn }} </h5>
+            <h5 class="book_author"> Author: {{ book.author }} </h5>
+            <h5 class="book_author"> ISBN: {{ book.isbn }} </h5>
         </div>
     </div>
 
-    <h3 id="dotted_line"> . . . </h3>
+    <div class="container outer_container"
+        <p id="three_dots">
+            <span class="fa fa-circle"></span>
+            <span class="fa fa-circle"></span>
+            <span class="fa fa-circle"></span>
+        </p>
+    </div>
 
     <div class="container outer_container" id="review_outer_container">
+        <h4> Reviews
+            <span class="fa fa-comment"></span>
+        </h4>
+        <hr>
         {% if book_reviews %}
             {% for review in book_reviews %}
                 <div class="container" id="review_container">
-                    <h4 id="book_name"> {{ review.username }} submitted on ({{ review.date }}) </h4>
-                    {% for number in range(review.rating) %}
+                    <h6 id="book_name">{{ review.username }} submitted a review on {{ review.date_created }} </h6>
+                    <p class="book_review">
+                        {% for number in range(review.rating) %}
                         <span class="fa fa-star checked"></span>
-                    {% endfor %}
-                    <p">{{ review.review }}</p>
+                        {% endfor %}
+                        {{ review.review }}
+                    </p>
                 </div>
-                <br> </br>
             {% endfor %}
         {% else %}
             <div class="container" id="review_container">
-                <h5 id="no_reviews"> No reviews yet </h5>
+                <h6 id="no_reviews"> No reviews yet </h6>
             </div>
         {% endif %}
     </div>
 
     {% if review_submitted %}
-        <div class="container outer_container" id="submit_review_container">
-            <h5> You submitted a review for this book already. </h5>
+        <div class="container outer_container">
+            <h6 id="already_submitted">
+                <span class="fa fa-check"></span>
+                You submitted a review for this book! Thank you.
+            </h6>
         </div>
     {% else %}
         <div class="container outer_container" id="submit_review_container">
@@ -67,20 +84,20 @@
             <form action="{{ url_for('review_book') }}" method="post">
                 <div class="form-group" id="star_rating">
                     <div>
-                        <input type="radio" id="one_star" name="user_rating" value="one">
+                        <input type="radio" id="one_star" name="user_rating" value=1>
                         <label for="one_star">
                             <span class="fa fa-star checked"></span>
                         </label>
                     </div>
                     <div>
-                        <input type="radio" id="two_star" name="user_rating" value="two">
+                        <input type="radio" id="two_star" name="user_rating" value=2>
                         <label for="two_star">
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                         </label>
                     </div>
                     <div>
-                        <input type="radio" id="three_star" name="user_rating" value="three">
+                        <input type="radio" id="three_star" name="user_rating" value=3>
                         <label for="three_star">
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
@@ -88,7 +105,7 @@
                         </label>
                     </div>
                     <div>
-                        <input type="radio" id="four_star" name="user_rating" value="four">
+                        <input type="radio" id="four_star" name="user_rating" value=4>
                         <label for="four_star">
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
@@ -97,7 +114,7 @@
                         </label>
                     </div>
                     <div>
-                        <input type="radio" id="five_star" name="user_rating" value="five">
+                        <input type="radio" id="five_star" name="user_rating" value=5>
                         <label for="five_star">
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
@@ -107,11 +124,15 @@
                         </label>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="hidden" value={{ book.isbn }} name="book_isbn">
+                    </div>
+                </div>
                 <h6> How would you describe this book to a friend? </h6>
                 <div class="form-group">
                     <div class="input-group">
-                        <textarea id="review_box" name="review_text" form="usrform" placeholder="Start Your Review"></textarea>
+                        <textarea class="form-control" id="review_box" name= "user_review" placeholder="Start Your Review"></textarea>
                     </div>
                 </div>
                 <div class="form-group">

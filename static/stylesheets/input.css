@@ -4,17 +4,26 @@
   text-align: center;
   margin: 40px; }
 
-h4, h5 {
+h3, h4, h5, h6, p {
   margin: 10px;
   font-family: "Helvetica", serif; }
 
 .pageheader {
   font-style: bold; }
 
+h3 {
+  font-size: 26px; }
+
 h4 {
   font-size: 22px; }
 
 h5 {
+  font-size: 18px; }
+
+h6 {
+  font-size: 17px; }
+
+p {
   font-size: 17px; }
 
 .navbar-nav a {
