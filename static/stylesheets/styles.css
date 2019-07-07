@@ -35,6 +35,11 @@ body {
     text-align: center;
 }
 
+#submit_review_container h5, h6 {
+    text-align: center;
+
+}
+
 #already_submitted, #three_dots {
     color: white;
     text-align: center;
@@ -131,12 +136,8 @@ body {
 
 #submit_review_container {
     background-color: white;
+    text-align: center;
 }
-
-#star_rating {
-    margin-left: 40%;
-}
-
 
 #Welcome {
     text-align: center;
