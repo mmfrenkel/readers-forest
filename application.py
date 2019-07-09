@@ -74,17 +74,18 @@ def attempt_registration():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
 
-    if db.username_exists(username):
-        return render_template("register.html", registration_message="Sorry, this username already exists. Try again.")
-    elif first_name is None or first_name in [" "]:
+    if first_name in ["", " "]:
         return render_template("register.html", registration_message="Please fill in a first name.")
-    elif last_name is None or last_name in [" "]:
+    elif last_name in ["", " "]:
         return render_template("register.html", registration_message="Please fill in a last name.")
-    elif username is None or username in [" "]:
+    elif username in ["", " "]:
         return render_template("register.html", registration_message="Please fill in a username.")
-    elif password is None or password in [" "]:
+    elif password in ["", " "]:
         return render_template("register.html", registration_message="Please fill in a password.")
+    elif db.username_exists(username):
+        return render_template("register.html", registration_message="Sorry, this username already exists. Try again.")
     else:
+        print("passed")
         db.add_new_user(first_name, last_name, username, password)
         return render_template("login.html", login_message="Successful Registration! Please Sign In")
 
@@ -153,27 +154,73 @@ def book(isbn):
 
 
 @app.route("/api/<int:isbn>", methods=["GET"])
-def flight_api(isbn):
+def book_by_isbn(isbn):
     """
-    Available 'GET' endpoint for Reader's Forest API.
+    Available 'GET' endpoint for Reader's Forest API to return all information about a book.
     :param isbn: identifier for the book
     :return: json, representing book information
     """
 
     # Get book object, information
-    book_object = db.search_by_isbn(isbn)
+    found_book = db.search_by_isbn(str(isbn))
 
-    # If book doesn't exist, then return error
-    if book_object is None:
+    # If book doesn't exist, then return 404 error
+    if found_book is None:
         return jsonify({"Error": "ISBN number provided is unknown"}), 404
 
     # return book as formatted json
     return jsonify(
         {
-            "title": book.title,
-            "author": book.author,
-            "year": book.year,
-            "isbn": book.isbn,
-            "review_count": book.review_count
+            "title": found_book.title,
+            "author": found_book.author,
+            "year": found_book.year,
+            "isbn": found_book.isbn,
+            "review_count": found_book.review_count
+        }
+    )
+
+
+@app.route("/api/<int:isbn>/author", methods=["GET"])
+def author_by_isbn(isbn):
+    """
+    Available 'GET' endpoint for Reader's Forest API to get an author for a given book
+    :param isbn: identifier for the book
+    :return: json, representing book's author
+    """
+
+    # Get book object, information
+    found_book = db.search_by_isbn(str(isbn))
+
+    # If book doesn't exist, then return 404 error
+    if found_book is None:
+        return jsonify({"Error": "ISBN number provided is unknown"}), 404
+
+    # return book as formatted json
+    return jsonify(
+        {
+            "author": found_book.author
+        }
+    )
+
+
+@app.route("/api/<int:isbn>/year", methods=["GET"])
+def year_by_isbn(isbn):
+    """
+    Available 'GET' endpoint for Reader's Forest API to get the year published for a given book
+    :param isbn: identifier for the book
+    :return: json, representing book's year of publication
+    """
+
+    # Get book object, information
+    found_book = db.search_by_isbn(str(isbn))
+
+    # If book doesn't exist, then return 404 error
+    if found_book is None:
+        return jsonify({"Error": "ISBN number provided is unknown"}), 404
+
+    # return book as formatted json
+    return jsonify(
+        {
+            "year": found_book.year
         }
     )

@@ -3,69 +3,8 @@ body {
     padding-bottom: 120px;
 }
 
-.form-group {
-    margin: 15px;
-}
-
-.fa-star {
-    text-align: center;
-    margin: auto;
-    font-size: 20px
-}
-
-.checked {
-    color: orange;
-}
-
-.unchecked {
-    color: lightgrey;
-}
-
-.dull_star {
-    margin: auto;
-    padding-top: 10px;
-    text-align: center;
-    color: grey;
-    font-size: 20px;
-}
-
-.outer_container {
-    width: 90%;
-    margin: auto;
-    padding: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    max-width: 700px;
-}
-
-.outer_container #review_box {
-    width: 100%;
-    margin: auto;
-    padding: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.outer_container h3, h4, h5 {
-    text-align: center;
-}
-
-#goodreads_review {
-    padding-top: 15px;
-}
-
-#submit_review_container h5, h6 {
-    text-align: center;
-}
-
-#already_submitted, #three_dots {
-    color: white;
-    text-align: center;
-}
-
-#three_dots {
-    font-size: 10px;
+.book_review {
+    font-style: italic;
 }
 
 .btn {
@@ -91,19 +30,68 @@ body {
     margin: auto;
 }
 
+.checked {
+    color: orange;
+}
+
+.dull_star {
+    margin: auto;
+    padding-top: 10px;
+    text-align: center;
+    color: grey;
+    font-size: 20px;
+}
+
+.form-group {
+    margin: 15px;
+}
+
+.fa-star {
+    text-align: center;
+    margin: auto;
+    font-size: 20px
+}
+
+.outer_container {
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+}
+
+.outer_container #review_box {
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.outer_container h3, h4, h5 {
+    text-align: center;
+}
+
 .star_container .fa-star {
     text-align: center;
 }
 
-.book_review {
-    font-style: italic;
+.unchecked {
+    color: lightgrey;
 }
 
-#login_container {
-    background-color: white;
-    padding: 10px;
+#already_submitted, #three_dots {
+    color: white;
     text-align: center;
-    font-size: 15px;
+}
+
+#book_container {
+    background-color: white;
+    padding: 20px;
+    margin: auto;
+    border-radius: 10px;
 }
 
 #book_logo_container {
@@ -118,7 +106,15 @@ body {
     max-width: 200px;
 }
 
-#search_container {
+#book_outer_container {
+    background-color: lightgreen;
+}
+
+#our_reviews {
+    padding-top: 20px;
+}
+
+#login_container {
     background-color: white;
     padding: 10px;
     text-align: center;
@@ -140,26 +136,30 @@ body {
     margin: 20px;
 }
 
-#book_outer_container {
-    background-color: lightgreen;
-}
-
 #review_outer_container {
     width: 90%;
     margin: auto;
     background-color: white;
 }
 
-#book_container {
+#search_container {
     background-color: white;
-    padding: 20px;
-    margin: auto;
-    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
 }
 
 #submit_review_container {
     background-color: white;
     text-align: center;
+}
+
+#submit_review_container h5, h6 {
+    text-align: center;
+}
+
+#three_dots {
+    font-size: 10px;
 }
 
 #Welcome {

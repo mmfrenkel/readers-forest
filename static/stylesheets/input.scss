@@ -23,31 +23,6 @@
     font-style: bold;
 }
 
-h3 {
-    @extend %fonts;
-    font-size: 26px;
-}
-
-h4 {
-    @extend %fonts;
-    font-size: 22px;
-}
-
-h5 {
-    @extend %fonts;
-    font-size: 18px;
-}
-
-h6 {
-    @extend %fonts;
-    font-size: 17px;
-}
-
-p {
-    @extend %fonts;
-    font-size: 17px;
-}
-
 .navbar-nav {
     a {
         font-size: 18px;
@@ -87,4 +62,29 @@ p {
         color: grey;
         font-size: 15px;
     }
+}
+
+h3 {
+    @extend %fonts;
+    font-size: 26px;
+}
+
+h4 {
+    @extend %fonts;
+    font-size: 22px;
+}
+
+h5 {
+    @extend %fonts;
+    font-size: 18px;
+}
+
+h6 {
+    @extend %fonts;
+    font-size: 17px;
+}
+
+p {
+    @extend %fonts;
+    font-size: 17px;
 }

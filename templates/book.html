@@ -34,7 +34,7 @@
             <hr>
             <h5> Author(s): {{ book.author }} </h5>
             <h5> ISBN: {{ book.isbn }} </h5>
-            <h5>
+            <h5 id="our_reviews">
                 {% if book.review_count == 0 %}
                     {% for number in range(5) %}
                         <span class="fa fa-star-o dull_star"></span>
@@ -72,12 +72,12 @@
             {% for review in book_reviews %}
                 <div class="container" id="review_container">
                     <h6 class="review_title">{{ review.username }} submitted a review on {{ review.date_created }} </h6>
-                    <p class="book_review">
+                    <h6 class="book_review">
                         {% for number in range(review.rating) %}
                         <span class="fa fa-star checked"></span>
                         {% endfor %}
                         &emsp; {{ review.review }}
-                    </p>
+                    </h6>
                 </div>
             {% endfor %}
         {% else %}
