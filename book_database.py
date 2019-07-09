@@ -220,12 +220,13 @@ class BookDatabase:
         list_books = list()
         for book in book_tuples:
             book_object = BookObject(
-                db_id=book[0],
-                isbn=book[1],
-                title=book[2],
-                author=book[3],
-                year=book[4],
-                star_rating=3
+                db_id=book.id,
+                isbn=book.isbn,
+                title=book.title,
+                author=book.author,
+                year=book.year,
+                star_rating=self.get_average_rating(book.isbn),
+                review_count=self.get_review_count(book.isbn)
             )
             list_books.append(book_object)
 
@@ -254,9 +255,27 @@ class BookDatabase:
             title=book_tuple[2],
             author=book_tuple[3],
             year=book_tuple[4],
-            star_rating=3
+            star_rating=self.get_average_rating(isbn),
+            review_count=self.get_review_count(isbn)
         )
         return book
+
+    def get_average_rating(self, isbn):
+
+        book_id = self.get_book_db_id_by_isbn(isbn)
+        query = "SELECT AVG(rating) as average_rating FROM book_reviews WHERE book_id = :book_id"
+        average_rating = self.session.execute(query, {"book_id": book_id}).fetchone()['average_rating']
+
+        if average_rating is None:
+            return 0
+        else:
+            return average_rating
+
+    def get_review_count(self, isbn):
+
+        book_id = self.get_book_db_id_by_isbn(isbn)
+        query = "SELECT COUNT(*) as count_reviews FROM book_reviews WHERE book_id = :book_id"
+        return self.session.execute(query, {"book_id": book_id}).fetchone()['count_reviews']
 
     def get_book_reviews(self, book_db_id):
         """

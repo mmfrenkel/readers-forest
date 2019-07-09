@@ -32,8 +32,25 @@
                 {{ book.title }} ({{ book.year }})
             </h3>
             <hr>
-            <h5> Author: {{ book.author }} </h5>
+            <h5> Author(s): {{ book.author }} </h5>
             <h5> ISBN: {{ book.isbn }} </h5>
+            <h5>
+                {% if book.review_count == 0 %}
+                    {% for number in range(5) %}
+                        <span class="fa fa-star-o dull_star"></span>
+                    {% endfor %}
+                    (0 reviews)
+                {% else %}
+                    Our reviewers say:
+                    {% for number in range(book.star_rating|int) %}
+                        <span class="fa fa-star checked"></span>
+                    {% endfor %}
+                    {% for number in range(5 - (book.star_rating|int)) %}
+                        <span class="fa fa-star unchecked"></span>
+                    {% endfor %}
+                    ({{ book.review_count }} reviews)
+                {% endif %}
+            </h5>
             <h5 id="goodreads_review"> Goodreads Rating: {{goodreads_rating}} ({{ number_goodreads_reviews }} reviews) </h5>
         </div>
     </div>
@@ -54,12 +71,12 @@
         {% if book_reviews %}
             {% for review in book_reviews %}
                 <div class="container" id="review_container">
-                    <h6 id="book_name">{{ review.username }} submitted a review on {{ review.date_created }} </h6>
+                    <h6 class="review_title">{{ review.username }} submitted a review on {{ review.date_created }} </h6>
                     <p class="book_review">
                         {% for number in range(review.rating) %}
                         <span class="fa fa-star checked"></span>
                         {% endfor %}
-                        {{ review.review }}
+                        &emsp; {{ review.review }}
                     </p>
                 </div>
             {% endfor %}
@@ -88,7 +105,10 @@
                         <input type="radio" id="one_star" name="user_rating" value=1>
                         <label for="one_star">
                             <span class="fa fa-star checked"></span>
-                            &emsp; &emsp; &emsp; &emsp;
+                            <span class="fa fa-star unchecked"></span>
+                            <span class="fa fa-star unchecked"></span>
+                            <span class="fa fa-star unchecked"></span>
+                            <span class="fa fa-star unchecked"></span>
                         </label>
                     </div>
                     <div>
@@ -96,7 +116,9 @@
                         <label for="two_star">
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
-                             &emsp; &emsp; &emsp;
+                            <span class="fa fa-star unchecked"></span>
+                            <span class="fa fa-star unchecked"></span>
+                            <span class="fa fa-star unchecked"></span>
                         </label>
                     </div>
                     <div>
@@ -105,7 +127,8 @@
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
-                             &emsp; &emsp;
+                            <span class="fa fa-star unchecked"></span>
+                            <span class="fa fa-star unchecked"></span>
                         </label>
                     </div>
                     <div>
@@ -115,7 +138,7 @@
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
-                             &emsp;
+                            <span class="fa fa-star unchecked"></span>
                         </label>
                     </div>
                     <div>

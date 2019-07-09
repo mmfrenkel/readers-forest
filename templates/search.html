@@ -57,9 +57,18 @@
                     </h4>
                     <h5 class="book_author"> {{ book.author }} </h5>
                     <div class="container star_container">
-                        {% for number in range(book.star_rating) %}
-                            <span class="fa fa-star checked"></span>
-                        {% endfor %}
+                        {% if book.star_rating == 0 %}
+                            {% for number in range(5) %}
+                                <span class="fa fa-star-o dull_star"></span>
+                            {% endfor %}
+                        {% else %}
+                            {% for number in range(book.star_rating|int) %}
+                                <span class="fa fa-star checked"></span>
+                            {% endfor %}
+                            {% for number in range(5 - (book.star_rating|int)) %}
+                                <span class="fa fa-star unchecked"></span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                     <form action="{{ url_for('find_book') }}" method="post">
                         <div class="form-group">

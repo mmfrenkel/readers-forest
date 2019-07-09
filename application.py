@@ -1,4 +1,4 @@
-from flask import Flask, session, request, render_template, redirect, url_for
+from flask import Flask, session, request, render_template, redirect, url_for, jsonify
 from flask_session import Session
 from book_database import BookDatabase
 from goodreads import GoodreadsAPI
@@ -138,15 +138,42 @@ def book(isbn):
     book_reviews = db.get_book_reviews(book_object.db_id)
     review_submitted = db.user_already_submitted_review(book_object.db_id, session['user_id'])
 
-    av_goodreads_rating = goodreads_api.get_average_rating(isbn)
-    num_goodreads_ratings = goodreads_api.get_number_ratings(isbn)
+    average_goodreads_rating = goodreads_api.get_average_rating(isbn)
+    number_goodreads_ratings = goodreads_api.get_number_ratings(isbn)
 
     return render_template(
         "book.html",
         user=session["first_name"],
         book=book_object,
         book_reviews=book_reviews,
-        goodreads_rating = av_goodreads_rating,
-        number_goodreads_reviews = num_goodreads_ratings,
+        goodreads_rating=average_goodreads_rating,
+        number_goodreads_reviews=number_goodreads_ratings,
         review_submitted=review_submitted
+    )
+
+
+@app.route("/api/<int:isbn>", methods=["GET"])
+def flight_api(isbn):
+    """
+    Available 'GET' endpoint for Reader's Forest API.
+    :param isbn: identifier for the book
+    :return: json, representing book information
+    """
+
+    # Get book object, information
+    book_object = db.search_by_isbn(isbn)
+
+    # If book doesn't exist, then return error
+    if book_object is None:
+        return jsonify({"Error": "ISBN number provided is unknown"}), 404
+
+    # return book as formatted json
+    return jsonify(
+        {
+            "title": book.title,
+            "author": book.author,
+            "year": book.year,
+            "isbn": book.isbn,
+            "review_count": book.review_count
+        }
     )

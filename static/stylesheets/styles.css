@@ -7,10 +7,26 @@ body {
     margin: 15px;
 }
 
-.checked {
-    color: orange;
+.fa-star {
     text-align: center;
     margin: auto;
+    font-size: 20px
+}
+
+.checked {
+    color: orange;
+}
+
+.unchecked {
+    color: lightgrey;
+}
+
+.dull_star {
+    margin: auto;
+    padding-top: 10px;
+    text-align: center;
+    color: grey;
+    font-size: 20px;
 }
 
 .outer_container {
@@ -41,7 +57,6 @@ body {
 
 #submit_review_container h5, h6 {
     text-align: center;
-
 }
 
 #already_submitted, #three_dots {
@@ -78,6 +93,10 @@ body {
 
 .star_container .fa-star {
     text-align: center;
+}
+
+.book_review {
+    font-style: italic;
 }
 
 #login_container {

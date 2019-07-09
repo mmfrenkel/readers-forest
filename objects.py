@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 
-class BookObject(namedtuple('Base', 'db_id isbn title author year star_rating')):
+class BookObject(namedtuple('Base', 'db_id isbn title author year star_rating review_count')):
     pass
 
 
