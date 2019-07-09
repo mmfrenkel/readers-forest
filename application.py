@@ -51,7 +51,7 @@ def attempt_login():
         return render_template("login.html", login_message="Your username or password is incorrect. Try again.")
 
 
-@app.route("/logout", methods=["Get"])
+@app.route("/logout", methods=["GET"])
 def logout():
     """ Logs user out of their session so they can log back in."""
     session.clear()
@@ -97,7 +97,7 @@ def search():
     if session.get("first_name") is None:
         return redirect(url_for('login'))
 
-    return render_template("search.html", user=session["first_name"], book_result=[])
+    return render_template("search.html", user=session["first_name"], book_result=[], searched=False)
 
 
 @app.route("/search", methods=["POST"])
@@ -107,7 +107,7 @@ def search_db():
     user_search = request.form.get("user_search")
     list_books = db.search_by_any(user_search)
 
-    return render_template("search.html", user=session["first_name"], book_result=list_books)
+    return render_template("search.html", user=session["first_name"], book_result=list_books, searched=True)
 
 
 @app.route("/book-search/", methods=["POST"])

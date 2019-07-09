@@ -82,7 +82,7 @@ body {
     color: lightgrey;
 }
 
-#already_submitted, #three_dots {
+#already_submitted, #three_dots, #no_book_results {
     color: white;
     text-align: center;
 }

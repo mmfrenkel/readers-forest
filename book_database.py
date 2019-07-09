@@ -25,7 +25,7 @@ class BookDatabase:
 
     def initiate_session(self):
         """Creates the SQLAlchemy Session"""
-        
+
         # Check for environment variable
         if not os.getenv("DATABASE_URL"):
             raise RuntimeError("DATABASE_URL is not set")
