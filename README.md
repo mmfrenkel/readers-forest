@@ -17,14 +17,14 @@ for an account, if one does not exist. Registration requires (1) a login,
 (2) password, (3) first name and (4) last name in order to be approved. 
 
 <p align="center">
-  <img src="./site_images/register.png" width="500" title="Registration Page">
+  <img src="./site_images/register.png" width="700" title="Registration Page">
 </p>
 
 Note that a fields must be filled and all usernames must be distinct. 
 Once the registration is confirmed, users may successfully login to their account.
 
 <p align="center">
-  <img src="./site_images/login.png" width="500" title="Login Page">
+  <img src="./site_images/login.png" width="700" title="Login Page">
 </p>
 
 Upon login, a user is directed toward a "search" page, where they can choose to
@@ -33,7 +33,7 @@ These 'tiles' each represent a book, with some high level information about
 each book.
 
 <p align="center">
-  <img src="./site_images/searched.png" width="500" title="Search Page">
+  <img src="./site_images/searched.png" width="700" title="Search Page">
 </p>
 
 If the user selects a given book, they're navigated toward the book page, where
@@ -43,7 +43,7 @@ contributed by Reader's Forest users. They may also submit their own review,
 though user's are only permitted to have one review per book.
 
 <p align="center">
-  <img src="./site_images/book.png" width="500" title="Book Page">
+  <img src="./site_images/book.png" width="700" title="Book Page">
 </p>
 
 User's can navigate back to the search page by selecting `Search` from the top
