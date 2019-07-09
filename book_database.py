@@ -5,13 +5,14 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from objects import BookObject, ReviewObject
 from datetime import datetime
 
-class DatabaseWorker:
+
+class BookDatabase:
 
     def __init__(self):
         self.session = None
         self.engine = None
 
-    def initialize_database(self):
+    def initialize(self):
         """Main method to set up new database tables from scratch and inserts book information from file."""
 
         try:
@@ -148,13 +149,13 @@ class DatabaseWorker:
             return False
         return True
 
-    def login_successful(self, username, password):
+    def correct_credentials(self, username, password):
         """
         Returns true if the username, password combination provided is in the db for
         1 and only 1 distinct entry.
         :param username
         :param password
-        :return: boolean for 'was successful login'
+        :return: boolean for 'correct credentials'
         """
 
         if self.session.execute("SELECT username FROM users WHERE username = :username AND password = :password",
@@ -184,7 +185,7 @@ class DatabaseWorker:
 
         return self.session.execute("SELECT id FROM books WHERE isbn = :ibsn", {"ibsn": isbn}).fetchone()['id']
 
-    def add_new_user_to_db(self, first_name, last_name, username, password):
+    def add_new_user(self, first_name, last_name, username, password):
         """
         Adds a new Reader's Forest user to the database (user table)
         :param first_name: first name of new user
@@ -204,7 +205,7 @@ class DatabaseWorker:
         except Exception as e:
             print(f"Could not add new user to the database due to: {e}")
 
-    def search_book_database_by_any(self, item):
+    def search_by_any(self, item):
         """
         Searches the book database to locate any 'matching' items based on LIKE queries for title, isbn and author
         and returns a list of book objects. Note that date is unsupported
@@ -230,7 +231,7 @@ class DatabaseWorker:
 
         return list_books
 
-    def search_book_database_by_isbn(self, isbn):
+    def search_by_isbn(self, isbn):
         """
         Searches the book database to locate books based on their isbn identification number.
         Note that this assumes that every isbn number is distinct
@@ -284,7 +285,7 @@ class DatabaseWorker:
 
         return list_reviews
 
-    def add_user_review_to_db(self, user_db_id, book_db_id, rating, review):
+    def add_user_review(self, user_db_id, book_db_id, rating, review):
         """
         Adds new user review to the database.
         :param user_db_id: database user id
@@ -300,8 +301,8 @@ class DatabaseWorker:
                 "book_id": book_db_id,
                 "user_id": user_db_id,
                 "date_created": datetime.now(),
-                "rating": rating,
-                "review": int(review)
+                "rating": int(rating),
+                "review": review
             }
         )
         self.session.commit()
@@ -321,4 +322,3 @@ class DatabaseWorker:
 
     def close_session(self):
         self.session.close()
-

@@ -1,5 +1,5 @@
-from database_worker import DatabaseWorker
+from book_database import BookDatabase
 
 if __name__ == "__main__":
-    db_runner = DatabaseWorker()
-    db_runner.initialize_database()
+    db = BookDatabase()
+    db.initialize_database()

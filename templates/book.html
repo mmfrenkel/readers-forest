@@ -32,8 +32,9 @@
                 {{ book.title }} ({{ book.year }})
             </h3>
             <hr>
-            <h5 class="book_author"> Author: {{ book.author }} </h5>
-            <h5 class="book_author"> ISBN: {{ book.isbn }} </h5>
+            <h5> Author: {{ book.author }} </h5>
+            <h5> ISBN: {{ book.isbn }} </h5>
+            <h5 id="goodreads_review"> Goodreads Rating: {{goodreads_rating}} ({{ number_goodreads_reviews }} reviews) </h5>
         </div>
     </div>
 
@@ -46,7 +47,7 @@
     </div>
 
     <div class="container outer_container" id="review_outer_container">
-        <h4> Reviews
+        <h4> Our Reviews
             <span class="fa fa-comment"></span>
         </h4>
         <hr>

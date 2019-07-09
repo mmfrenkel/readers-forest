@@ -1,6 +1,7 @@
 from flask import Flask, session, request, render_template, redirect, url_for
 from flask_session import Session
-from database_worker import DatabaseWorker
+from book_database import BookDatabase
+from goodreads import GoodreadsAPI
 
 app = Flask(__name__)
 
@@ -9,9 +10,12 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Create a DatabaseWorker
-db = DatabaseWorker()
+# Create a Database
+db = BookDatabase()
 db.initiate_session()
+
+# Goodreads API
+goodreads_api = GoodreadsAPI()
 
 
 @app.route("/")
@@ -39,7 +43,7 @@ def attempt_login():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    if db.login_successful(username, password):
+    if db.correct_credentials(username, password):
         session["first_name"] = db.get_users_name_by_login(username, password)
         session["user_id"] = db.get_user_id_by_login(username, password)
         return redirect(url_for('search'))
@@ -72,8 +76,16 @@ def attempt_registration():
 
     if db.username_exists(username):
         return render_template("register.html", registration_message="Sorry, this username already exists. Try again.")
+    elif first_name is None or first_name in [" "]:
+        return render_template("register.html", registration_message="Please fill in a first name.")
+    elif last_name is None or last_name in [" "]:
+        return render_template("register.html", registration_message="Please fill in a last name.")
+    elif username is None or username in [" "]:
+        return render_template("register.html", registration_message="Please fill in a username.")
+    elif password is None or password in [" "]:
+        return render_template("register.html", registration_message="Please fill in a password.")
     else:
-        db.add_new_user_to_db(first_name, last_name, username, password)
+        db.add_new_user(first_name, last_name, username, password)
         return render_template("login.html", login_message="Successful Registration! Please Sign In")
 
 
@@ -92,7 +104,7 @@ def search_db():
     """Searches database for users request field, returning any match on isbn, author or title."""
 
     user_search = request.form.get("user_search")
-    list_books = db.search_book_database_by_any(user_search)
+    list_books = db.search_by_any(user_search)
 
     return render_template("search.html", user=session["first_name"], book_result=list_books)
 
@@ -111,7 +123,7 @@ def review_book():
     review = request.form.get("user_review")
 
     book_db_id = db.get_book_db_id_by_isbn(isbn)
-    db.add_user_review_to_db(user_db_id=session["user_id"], book_db_id=book_db_id, rating=rating, review=review)
+    db.add_user_review(user_db_id=session["user_id"], book_db_id=book_db_id, rating=rating, review=review)
 
     return redirect(url_for('book', isbn=isbn))
 
@@ -122,10 +134,19 @@ def book(isbn):
     if session.get("first_name") is None:
         return redirect(url_for('login'))
 
-    book_object = db.search_book_database_by_isbn(isbn)
+    book_object = db.search_by_isbn(isbn)
     book_reviews = db.get_book_reviews(book_object.db_id)
     review_submitted = db.user_already_submitted_review(book_object.db_id, session['user_id'])
 
-    return render_template("book.html", user=session["first_name"], book=book_object, book_reviews=book_reviews,
-                           review_submitted=review_submitted)
+    av_goodreads_rating = goodreads_api.get_average_rating(isbn)
+    num_goodreads_ratings = goodreads_api.get_number_ratings(isbn)
 
+    return render_template(
+        "book.html",
+        user=session["first_name"],
+        book=book_object,
+        book_reviews=book_reviews,
+        goodreads_rating = av_goodreads_rating,
+        number_goodreads_reviews = num_goodreads_ratings,
+        review_submitted=review_submitted
+    )

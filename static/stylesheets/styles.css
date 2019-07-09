@@ -35,6 +35,10 @@ body {
     text-align: center;
 }
 
+#goodreads_review {
+    padding-top: 15px;
+}
+
 #submit_review_container h5, h6 {
     text-align: center;
 
