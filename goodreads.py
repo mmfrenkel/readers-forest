@@ -1,3 +1,6 @@
+"""
+The GoodreadsAPI class represents interactions this project can have with the Goodreads API.
+"""
 import requests
 import os
 

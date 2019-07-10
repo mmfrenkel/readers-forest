@@ -1,3 +1,7 @@
+"""
+The "BookDatabase" class represents all interactions of the website with the book database, including the
+definitions of how tables should be configured/created.
+"""
 import os
 import csv
 from sqlalchemy import create_engine
@@ -125,6 +129,7 @@ class BookDatabase:
         self.session.commit()
 
     def create_user_saved_books(self):
+        """This creates a table called 'saved books' that is currently not fully implemented in this version."""
 
         if self.engine.dialect.has_table(self.engine, 'saved_books'):
             print("Note 'saved_books' table already exists")
@@ -259,6 +264,8 @@ class BookDatabase:
         return book
 
     def get_average_rating(self, isbn):
+        """ Gets the average rating of the book based on existing reviews in the book database based on isbn
+        number; 0 if no ratings yet; otherwise the average."""
 
         book_id = self.get_book_db_id_by_isbn(isbn)
         query = "SELECT AVG(rating) as average_rating FROM book_reviews WHERE book_id = :book_id"
@@ -270,6 +277,7 @@ class BookDatabase:
             return average_rating
 
     def get_review_count(self, isbn):
+        """Returns the number of reviews for the book currently in the database."""
 
         book_id = self.get_book_db_id_by_isbn(isbn)
         query = "SELECT COUNT(*) as count_reviews FROM book_reviews WHERE book_id = :book_id"
@@ -338,4 +346,5 @@ class BookDatabase:
             return False
 
     def close_session(self):
+        """Officially ends the session with the database."""
         self.session.close()

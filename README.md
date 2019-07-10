@@ -80,7 +80,8 @@ using Heroku. Four database tables currently exist as part of this project:
 * `saved_books`: a table containing books saved for each user (note: this functionally is not fully implemented
 for this release of this website, but functionality will be included in a future release).
 
-Configurations of the database can be found in the `book_database.py` file of this repository.
+Configurations of the database can be found in the `book_database.py` file of this repository. Note that this project
+uses SQLAlchemy as the main 'toolkit' to interact with the Postgres database using python.
 
 ### Flask
 
@@ -160,12 +161,23 @@ issuing the following command to tell Sass to watch and recompile this file as c
 $ sass --watch input.scss:input.css
 ```
 
+#### Setup Database
+The database can be setup locally (or recreated in Heroku) using the `initialize()` method of the `BookDatabase`
+ class found in `book_database.py`, which uses SQLAlchemy in order to manage database sessions, as well as 
+ create and execute queries against tables.
+ 
+Issue the following command in order to initiate all tables, using this project as your working directory. 
+Note that if tables already exist, you will be alerted.
+```
+$ python import.py
+```
+
 #### Run
-See the website and changes by running Flask:
+With all the above completed, you can deploy the website locally and review it by running Flask:
 ```
 $ flask run
 ```
-Please follow the resulting url printed by Flask in any browser.
+Use the resulting url printed by Flask in any browser.
 
 ## V. Developer Notes 
 This project was developed on a Macbook (macOS Mojave) and was primarily tested in

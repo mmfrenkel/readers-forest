@@ -1,3 +1,6 @@
+"""
+Helpful classes defined to make facilitate information passage between the database and Jinja template variables.
+"""
 from collections import namedtuple
 
 
