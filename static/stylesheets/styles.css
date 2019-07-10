@@ -23,6 +23,7 @@ body {
     border-radius: 15px;
     margin: auto;
     width: 65%;
+    max-width: 600px;
 }
 
 .center_box .logo {

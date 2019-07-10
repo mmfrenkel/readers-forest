@@ -1,30 +1,31 @@
 # Reader's Forest
 
-## About
+## I. About
 
-Reader's Forest is an interactive website that allows a user to 
-search for books to read and for books to review after registering for an account.
-The project also offers several API endpoints that allow for 
-developers to freely interact with the Reader's Forest dataset.
+Reader's Forest is an interactive website that allows a user to both
+search for books to read and review books already read, after both registering and logging to
+their account. Reviews and ratings for books are sourced both from Reader's Forest users as 
+well as from the Goodreads database, accessible via API. The project itself also offers 
+several API endpoints that allow for developers to interact with the Reader's Forest database.
 
-## Navigating
+## II. User Navigation + Usage
 
 The following outlines a user experience in Reader's Forest, with images captured from the
-website pages for a fake user named `TestUser`.
+website pages for a fake user named `Test User`.
 
 Users are directed first toward the login page and asked to register
 for an account, if one does not exist. Registration requires (1) a login, 
 (2) password, (3) first name and (4) last name in order to be approved. 
 
 <p align="center">
-  <img src="./site_images/register.png" width="700" title="Registration Page" border="3">
+  <img src="./site_images/register.png" width="600" title="Registration Page">
 </p>
 
 Note that a fields must be filled and all usernames must be distinct. 
 Once the registration is confirmed, users may successfully login to their account.
 
 <p align="center">
-  <img src="./site_images/login.png" width="700" title="Login Page" border="3">
+  <img src="./site_images/login.png" width="600" title="Login Page">
 </p>
 
 Upon login, a user is directed toward a "search" page, where they can choose to
@@ -33,7 +34,7 @@ These 'tiles' each represent a book, with some high level information about
 each book.
 
 <p align="center">
-  <img src="./site_images/searched.png" width="700" title="Search Page" border="3">
+  <img src="./site_images/searched.png" width="600" title="Search Page">
 </p>
 
 If the user selects a given book, they're navigated toward the book page, where
@@ -43,14 +44,14 @@ contributed by Reader's Forest users. They may also submit their own review,
 though user's are only permitted to have one review per book.
 
 <p align="center">
-  <img src="./site_images/book.png" width="700" title="Book Page" border="3">
+  <img src="./site_images/book.png" width="600" title="Book Page">
 </p>
 
 User's can navigate back to the search page by selecting `Search` from the top
 navigation bar. When finished with their session, user's may logout via the 
 `Logout` option on the top navigation bar on the page.
 
-## Components
+## III. Components
 
 ### HTML + CSS
 There are four central "pages" of the Reader's Forest site:
@@ -69,8 +70,8 @@ All formatting for the website is controlled by two stylesheets, found within `s
 Images used in this website can similarly be found under `static/img/`.
 
 ### Database
-Data that supports the Reader's Forest site lives in a Postgres database that was configured
-through Heroku. Four database tables currently exist as part of this project:
+Data that supports the Reader's Forest site is stored in a Postgres database that was configured
+using Heroku. Four database tables currently exist as part of this project:
 
 * `users`: contains login, registration information about each user.
 * `books`: contains information relevant to each book (note that books were sourced from an initial
@@ -84,7 +85,7 @@ Configurations of the database can be found in the `book_database.py` file of th
 ### Flask
 
 This website is supported by a python microframework called Flask, with routes configured
-in this projects `application.py` file. 
+in this project's `application.py` file. 
 
 As defined in this file, users can make `GET` requests from the following endpoints:
 * `/`: redirects to the login or search pages, depending on session status.
@@ -96,7 +97,6 @@ As defined in this file, users can make `GET` requests from the following endpoi
 
 `POST` requests are also available from the `/login`, `/register`, `/book-review`, and `/search` routes, 
 where data may be processed, retrieved, or added to the database.
-
 
 ### API
 
@@ -119,7 +119,7 @@ number of ratings for individual books was retrieved for the `/book/<isbn>` endp
 This project's interaction with the Goodreads API is defined in the `goodreads.py` file of this
  repository. See more about how to setup access to Goodreads below.
 
-## Usage Locally
+## IV. Usage Locally
 
 In order to deploy Reader's Forest locally, please follow the steps below.
 
@@ -167,7 +167,7 @@ $ flask run
 ```
 Please follow the resulting url printed by Flask in any browser.
 
-## Developer Notes 
+## V. Developer Notes 
 This project was developed on a Macbook (macOS Mojave) and was primarily tested in
 Safari and Chrome.
 
